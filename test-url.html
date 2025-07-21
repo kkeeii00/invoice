@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL接続テスト</title>
+</head>
+<body>
+    <h2>Google Apps Script URL 接続テスト</h2>
+    <button id="testButton">URLテスト実行</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('testButton').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            const url = 'https://script.google.com/macros/s/AKfycbz05roN5S5kMiZApbFqY1OaU_3GpH-tOKZr5wa15yAfObDBKfzNOf67GO2UMK8ucEJO/exec';
+            
+            resultDiv.innerHTML = '<p>テスト中...</p>';
+            
+            try {
+                console.log('GET リクエスト開始...');
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                console.log('Response:', response);
+                const text = await response.text();
+                console.log('Response text:', text);
+                
+                resultDiv.innerHTML = `
+                    <h3>成功</h3>
+                    <p>Status: ${response.status}</p>
+                    <p>Response: ${text}</p>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <h3>エラー</h3>
+                    <p>Error: ${error.message}</p>
+                `;
+                
+                // no-corsモードでも試してみる
+                try {
+                    console.log('no-cors モードで再試行...');
+                    const response2 = await fetch(url, {
+                        method: 'GET',
+                        mode: 'no-cors'
+                    });
+                    console.log('no-cors Response:', response2);
+                    
+                    resultDiv.innerHTML += `
+                        <h4>no-corsモード結果</h4>
+                        <p>Status: ${response2.status || 'unknown'}</p>
+                        <p>Type: ${response2.type}</p>
+                    `;
+                } catch (error2) {
+                    console.error('no-cors Error:', error2);
+                    resultDiv.innerHTML += `<p>no-corsモードも失敗: ${error2.message}</p>`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# 環境変数ファイル
+.env.local
+.env
+
+# その他
+node_modules/
+*.log
+.DS_Store
+Thumbs.db

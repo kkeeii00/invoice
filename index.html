@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請求書生成アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>請求書生成アプリ</h1>
+        </header>
+
+        <main class="main-content">
+            <!-- 入力フォームエリア -->
+            <section class="form-section">
+                <h2>請求書情報入力</h2>
+                <form id="invoiceForm">
+                    <div class="form-group">
+                        <label for="companyName">請求先会社名 *</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactPerson">担当者名 *</label>
+                        <input type="text" id="contactPerson" name="contactPerson" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="invoiceDate">請求日 *</label>
+                            <input type="date" id="invoiceDate" name="invoiceDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dueDate">支払期日 *</label>
+                            <input type="date" id="dueDate" name="dueDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="invoiceNumber">請求番号 *</label>
+                        <input type="text" id="invoiceNumber" name="invoiceNumber" required>
+                    </div>
+
+                    <!-- 商品明細セクション -->
+                    <div class="items-section">
+                        <h3>商品明細</h3>
+                        <div id="itemsList" class="items-list">
+                            <div class="item-row" data-index="0">
+                                <div class="item-group">
+                                    <label>商品名 *</label>
+                                    <input type="text" name="itemName" required>
+                                </div>
+                                <div class="item-group">
+                                    <label>単価 *</label>
+                                    <input type="number" name="unitPrice" min="0" step="1" required>
+                                </div>
+                                <div class="item-group">
+                                    <label>数量 *</label>
+                                    <input type="number" name="quantity" min="1" step="1" value="1" required>
+                                </div>
+                                <div class="item-group">
+                                    <label>小計</label>
+                                    <input type="text" name="itemTotal" readonly>
+                                </div>
+                                <button type="button" class="remove-item" onclick="removeItem(0)">削除</button>
+                            </div>
+                        </div>
+                        <button type="button" id="addItem" class="add-item-btn">+ 商品を追加</button>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="notes">備考</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="振込手数料はご負担ください"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="resetForm">リセット</button>
+                        <button type="button" id="saveToSheets" class="sheets-btn">Google Sheetsに保存</button>
+                        <button type="button" id="downloadPdf" class="primary-btn">PDFダウンロード</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- プレビューエリア -->
+            <section class="preview-section">
+                <h2>プレビュー</h2>
+                <div id="invoicePreview" class="invoice-preview">
+                    <div class="invoice-header">
+                        <h3>請求書</h3>
+                        <div class="invoice-meta">
+                            <div class="invoice-number">請求書番号: <span id="previewInvoiceNumber">-</span></div>
+                            <div class="invoice-date">発行日: <span id="previewInvoiceDate">-</span></div>
+                        </div>
+                    </div>
+
+                    <div class="invoice-to">
+                        <div class="company-info">
+                            <div class="company-name"><span id="previewCompanyName">会社名</span> 御中</div>
+                            <div class="contact-person">担当者: <span id="previewContactPerson">-</span></div>
+                        </div>
+                    </div>
+
+                    <div class="invoice-items">
+                        <table class="items-table">
+                            <thead>
+                                <tr>
+                                    <th>商品名</th>
+                                    <th>単価</th>
+                                    <th>数量</th>
+                                    <th>小計</th>
+                                </tr>
+                            </thead>
+                            <tbody id="previewItemsList">
+                                <tr>
+                                    <td colspan="4" class="no-items">商品が入力されていません</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="invoice-totals">
+                        <div class="total-row">
+                            <span class="total-label">小計:</span>
+                            <span id="previewSubtotal" class="total-value">¥0</span>
+                        </div>
+                        <div class="total-row">
+                            <span class="total-label">消費税 (<span id="previewTaxRate">10</span>%):</span>
+                            <span id="previewTaxAmount" class="total-value">¥0</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span class="total-label">合計:</span>
+                            <span id="previewTotal" class="total-value">¥0</span>
+                        </div>
+                    </div>
+
+                    <div class="invoice-footer">
+                        <div class="due-date">お支払期日: <span id="previewDueDate">-</span></div>
+                        <div class="notes">
+                            <div class="notes-label">備考:</div>
+                            <div id="previewNotes" class="notes-content">-</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/pdf-generator.js"></script>
+    <script src="js/env-loader.js"></script>
+    <script src="js/google-sheets.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

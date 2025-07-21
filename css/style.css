@@ -1,0 +1,495 @@
+/* リセットCSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #2563eb;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* フォームセクション */
+.form-section {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+    color: #1f2937;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group input[readonly] {
+    background-color: #f9fafb;
+    color: #6b7280;
+}
+
+/* 商品明細セクション */
+.items-section {
+    margin: 30px 0;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #f9fafb;
+}
+
+.items-section h3 {
+    color: #1f2937;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.item-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+}
+
+.item-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-group label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.item-group input {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.remove-item {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+    min-width: 60px;
+}
+
+.remove-item:hover {
+    background-color: #b91c1c;
+}
+
+.add-item-btn {
+    background-color: #059669;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.add-item-btn:hover {
+    background-color: #047857;
+}
+
+/* フォームアクション */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.form-actions button {
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+#resetForm {
+    background-color: #6b7280;
+    color: white;
+    border: none;
+}
+
+#resetForm:hover {
+    background-color: #4b5563;
+}
+
+.primary-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+}
+
+.primary-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.sheets-btn {
+    background-color: #059669;
+    color: white;
+    border: none;
+}
+
+.sheets-btn:hover {
+    background-color: #047857;
+}
+
+.sheets-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Google Sheets設定モーダル */
+.google-sheets-modal .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.google-sheets-modal .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.google-sheets-modal h3 {
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+
+.google-sheets-modal input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.google-sheets-modal .modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.google-sheets-modal .modal-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.google-sheets-modal #cancelConfig {
+    background-color: #6b7280;
+    color: white;
+}
+
+.google-sheets-modal .config-help {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.google-sheets-modal .config-help details {
+    margin-top: 10px;
+}
+
+.google-sheets-modal .config-help ol {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+/* プレビューセクション */
+.preview-section {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 20px;
+}
+
+.preview-section h2 {
+    color: #1f2937;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+}
+
+/* 請求書プレビュー */
+.invoice-preview {
+    border: 1px solid #d1d5db;
+    padding: 40px;
+    background: white;
+    min-height: 600px;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.invoice-header h3 {
+    font-size: 2rem;
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.invoice-meta {
+    text-align: right;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.invoice-to {
+    margin-bottom: 30px;
+}
+
+.company-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.contact-person {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* 請求書テーブル */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.items-table th,
+.items-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.items-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.items-table td {
+    color: #374151;
+}
+
+.items-table .no-items {
+    text-align: center;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* 合計セクション */
+.invoice-totals {
+    margin-left: auto;
+    width: 300px;
+    border-top: 2px solid #e5e7eb;
+    padding-top: 20px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.total-final {
+    border-top: 2px solid #1f2937;
+    border-bottom: 3px double #1f2937;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.total-label {
+    color: #374151;
+}
+
+.total-value {
+    font-weight: 500;
+    color: #1f2937;
+}
+
+/* フッター */
+.invoice-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.due-date {
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #dc2626;
+}
+
+.notes-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #374151;
+}
+
+.notes-content {
+    color: #6b7280;
+    white-space: pre-line;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .preview-section {
+        position: relative;
+        top: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .form-section,
+    .preview-section {
+        padding: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .item-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .invoice-preview {
+        padding: 20px;
+    }
+    
+    .invoice-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .invoice-totals {
+        width: 100%;
+    }
+}
