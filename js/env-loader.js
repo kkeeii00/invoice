@@ -6,16 +6,15 @@ class EnvLoader {
         this.loaded = false;
     }
 
-    // .env.localファイルを読み込む
+    // Vercel環境変数を読み込む
     async loadEnvFile() {
         try {
-            const response = await fetch('.env.local');
-            if (!response.ok) {
-                throw new Error('.env.localファイルが見つかりません');
-            }
-            
-            const envContent = await response.text();
-            this.parseEnvContent(envContent);
+            // Vercelビルド時に埋め込まれた環境変数を使用
+            this.envVars = {
+                OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
+                OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+                // 必要に応じて他の環境変数を追加
+            };
             this.loaded = true;
             
             console.log('環境変数が正常に読み込まれました');
@@ -28,31 +27,6 @@ class EnvLoader {
         }
     }
 
-    // env形式の文字列を解析
-    parseEnvContent(content) {
-        const lines = content.split('\n');
-        
-        lines.forEach(line => {
-            line = line.trim();
-            
-            // コメント行や空行をスキップ
-            if (line.startsWith('#') || line === '') {
-                return;
-            }
-            
-            // KEY=VALUE 形式を解析
-            const equalIndex = line.indexOf('=');
-            if (equalIndex !== -1) {
-                const key = line.substring(0, equalIndex).trim();
-                const value = line.substring(equalIndex + 1).trim();
-                
-                // クォートを削除（もしあれば）
-                const cleanValue = value.replace(/^["']|["']$/g, '');
-                
-                this.envVars[key] = cleanValue;
-            }
-        });
-    }
 
     // 環境変数を取得
     get(key, defaultValue = '') {
